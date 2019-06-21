@@ -1,6 +1,14 @@
 ﻿#target illustrator
 
-
+function contains(a, obj) {
+  var i = a.length;
+  while (i--) {
+     if (a[i] === obj) {
+         return true;
+     }
+  }
+  return false;
+}
 //
 //
 //
@@ -11,9 +19,9 @@
 
 function start() {
 
-  const found = [];
+  var found = [];
 
-  const doc = app.activeDocument;
+  var doc = app.activeDocument;
 
   // Get selection info:
   // app.activeDocument.selection
@@ -28,7 +36,7 @@ function start() {
   // $.writeln(object.toSource());
   // $.writeln(object.toString());
 
-  const items = app.activeDocument.pageItems;
+  var items = app.activeDocument.pageItems;
 
   // Collect colors:
   for (var i = 0; i < items.length; i++) {
@@ -39,15 +47,19 @@ function start() {
 
       var color = items[i].fillColor.spot;
 
-      if ( ! found.includes(color)) {
+      if (contains(found, color)) {
+
+        $.writeln('yes')
+
         found.push(color);
+
       }
 
     }
 
   }
 
-  // $.writeln(found.toString());
+  $.writeln(found.toString());
 
 
   for (var foundColor in found) {
