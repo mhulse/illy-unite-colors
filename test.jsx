@@ -1,4 +1,4 @@
-﻿#target illustrator
+﻿#include lib/AiMenuObject/AiMenu_v22.jsxinc
 
 function contains(a, obj) {
   var i = a.length;
@@ -47,7 +47,7 @@ function start() {
 
       var color = items[i].fillColor.spot;
 
-      if (contains(found, color)) {
+      if ( ! contains(found, color)) {
 
         $.writeln('yes')
 
@@ -62,21 +62,22 @@ function start() {
   $.writeln(found.toString());
 
 
-  for (var foundColor in found) {
+  for (var x = 0; x < found.length; x++) {
 
     // clear selection
-    // doc.selection = null;
+    doc.selection = null;
 
     for (var i = 0; i < items.length; i++) {
 
       if (items[i].typename === 'PathItem') {
 
+        var foundColor = found[x];
         var color = items[i].fillColor.spot;
 
         $.writeln(color.toString());
-        $.writeln(foundColor.toString());
+        $.writeln(foundColor);
 
-        if (color.toString() == foundColor.toString()) {
+        if (color.toString() == foundColor) {
 
           items[i].selected = true;
 
@@ -86,12 +87,14 @@ function start() {
 
     }
 
-    // app.executeMenuCommand("group");
-    // app.executeMenuCommand("Live Pathfinder Add");
-    // app.executeMenuCommand("expandStyle");
+    app.executeMenuCommand("group");
+    app.executeMenuCommand("Live Pathfinder Add");
+    app.executeMenuCommand("expandStyle");
 
-    // // Deselect:
-    // doc.selection = null;
+    // Deselect:
+    doc.selection = null;
+
+    app.redraw();
 
   }
 
